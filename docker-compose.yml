@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: whiteboard-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: whiteboarddb
+    ports:
+      - "5432:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: whiteboard-keycloak
+    command: start-dev
+
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - postgres
